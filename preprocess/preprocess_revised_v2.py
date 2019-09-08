@@ -20,6 +20,7 @@ PREPROCESS_DIR = path_header.PREPROCESS_DIR
 from module.base_preprocessing_revised_v2 import *
 from module.replace_nan import *
 from module import label
+from module.knn_clustering import knn_clustering
 
 def preprocess(dataset):
 	if dataset == 'train':  # train label 전처리 수행 (acc_id 정렬, one-hot-encoding)
@@ -32,6 +33,9 @@ def preprocess(dataset):
 	save_df_withNA(dataset, df, PREPROCESS_DIR)
 	df = replace_nan(dataset, df)
 	save_df(dataset, df, PREPROCESS_DIR)      # 저장
+	
+	if dataset == 'train':
+		knn_clustering()               		  # knn-clustering 결과 저장
 
 def load_data(dataset, RAW_DIR):
 	print('\n:::::::: create dataframes...')
